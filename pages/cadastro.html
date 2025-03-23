@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+    <link rel="icon" type="image/x-icon" href="/assets/logo/logo5.svg">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Corpo da Página */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1f1f20; /* Fundo sempre escuro */
+            color: white;
+            transition: 0.3s;
+            padding: 20px; /* Adicionado padding para evitar sobreposição */
+        }
+
+        /* Containers */
+        .container-wrapper {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap; /* Permite que os containers quebrem para a próxima linha */
+            justify-content: center;
+        }
+
+        .container {
+            background: white; /* Containers sempre brancos */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            border: 1px solid #ccc; /* Bordas cinza claro */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1D3B91; /* Azul escuro para os títulos */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333; /* Texto cinza escuro */
+        }
+
+        label.required::after {
+            content: " *";
+            color: red; /* Asterisco vermelho para campos obrigatórios */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9; /* Fundo dos inputs */
+            color: #333; /* Texto cinza escuro */
+        }
+
+        input[readonly] {
+            background: #eaeaea; /* Fundo cinza para campos readonly */
+            color: #333; /* Texto cinza escuro */
+            cursor: not-allowed;
+        }
+
+        button {
+            padding: 10px;
+            background: #6C63FF; /* Roxo */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5548D6; /* Roxo mais escuro no hover */
+        }
+
+        /* Botão de voltar */
+        .voltar-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            background: #6C63FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Botão de cadastrar */
+        .cadastrar-btn {
+            margin-top: 20px;
+            width: 200px;
+            padding: 10px;
+            background: #6C63FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Grupo de CEP */
+        .cep-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .cep-group input {
+            flex: 1;
+        }
+
+        .cep-group button {
+            width: auto;
+        }
+
+        /* Mensagem de campos obrigatórios */
+        .obrigatorio {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Partículas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+    </style>
+    <!-- Biblioteca de partículas -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <!-- Botão de voltar -->
+    <button class="voltar-btn" onclick="window.history.back()">Voltar</button>
+
+    <!-- Partículas -->
+    <div id="particles-js"></div>
+
+    <!-- Wrapper para os containers -->
+    <div class="container-wrapper">
+        <!-- Container de dados do usuário -->
+        <div class="container">
+            <h1>Dados do Usuário</h1>
+            <form id="cadastroForm">
+                <!-- Campos obrigatórios -->
+                <div class="form-group">
+                    <label for="nome" class="required">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="sobrenome" class="required">Sobrenome:</label>
+                    <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite seu sobrenome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="required">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha" class="required">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmarSenha" class="required">Confirmar Senha:</label>
+                    <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirme sua senha" required>
+                </div>
+
+                <!-- Seleção de Pessoa Física ou Jurídica -->
+                <div class="form-group">
+                    <label class="required">Tipo de Pessoa:</label>
+                    <div>
+                        <label>
+                            <input type="radio" name="pessoa" value="Física" checked> Pessoa Física
+                        </label>
+                        <label>
+                            <input type="radio" name="pessoa" value="Jurídica"> Pessoa Jurídica
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Campos opcionais -->
+                <div class="form-group">
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" name="telefone" placeholder="Digite seu telefone">
+                </div>
+                <div class="form-group" id="cnpjGroup" style="display: none;">
+                    <label for="cnpj">CNPJ:</label>
+                    <input type="text" id="cnpj" name="cnpj" placeholder="Digite seu CNPJ">
+                </div>
+            </form>
+        </div>
+
+        <!-- Container de dados de endereço -->
+        <div class="container">
+            <h1>Endereço</h1>
+            <form id="enderecoForm">
+                <!-- Endereço -->
+                <div class="form-group cep-group">
+                    <input type="text" id="cep" name="cep" placeholder="Digite o CEP">
+                    <button type="button" id="buscarCep">🔍</button>
+                </div>
+                <div class="form-group">
+                    <label for="logradouro" class="required">Logradouro:</label>
+                    <input type="text" id="logradouro" name="logradouro" placeholder="Logradouro">
+                </div>
+                <div class="form-group">
+                    <label for="numero" class="required">Número:</label>
+                    <input type="text" id="numero" name="numero" placeholder="Digite o número">
+                </div>
+                <div class="form-group">
+                    <label for="complemento">Complemento:</label>
+                    <input type="text" id="complemento" name="complemento" placeholder="Digite o complemento">
+                </div>
+                <div class="form-group">
+                    <label for="bairro" class="required">Bairro:</label>
+                    <input type="text" id="bairro" name="bairro" placeholder="Bairro">
+                </div>
+                <div class="form-group">
+                    <label for="localidade" class="required">Cidade:</label>
+                    <input type="text" id="localidade" name="localidade" placeholder="Cidade">
+                </div>
+                <div class="form-group">
+                    <label for="uf" class="required">Estado:</label>
+                    <input type="text" id="uf" name="uf" placeholder="Estado">
+                </div>
+                <!-- Mensagem de campos obrigatórios -->
+                <div class="obrigatorio">
+                    <small>Campos com <span style="color: red;">*</span> são obrigatórios.</small>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botão de cadastrar -->
+    <button class="cadastrar-btn" id="cadastrar-btn">Cadastrar</button>
+
+    <script>
+        // Configuração das partículas (igual à tela de login)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": { "enable": true, "value_area": 800 }
+                },
+                "color": { "value": "#ffffff" },
+                "shape": {
+                    "type": "circle",
+                    "stroke": { "width": 0, "color": "#000000" },
+                    "polygon": { "nb_sides": 5 }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 400, "line_linked": { "opacity": 1 } },
+                    "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
+                    "repulse": { "distance": 100, "duration": 0.4 },
+                    "push": { "particles_nb": 4 },
+                    "remove": { "particles_nb": 2 }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Lógica do formulário
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('cadastroForm');
+            const enderecoForm = document.getElementById('enderecoForm');
+            const cnpjGroup = document.getElementById('cnpjGroup');
+            const pessoaRadios = document.querySelectorAll('input[name="pessoa"]');
+            const buscarCepBtn = document.getElementById('buscarCep');
+            const cadastrarBtn = document.getElementById('cadastrar-btn');
+
+            // Mostrar/ocultar campo CNPJ com base na seleção de pessoa
+            pessoaRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    cnpjGroup.style.display = radio.value === 'Jurídica' ? 'block' : 'none';
+                });
+            });
+
+            // Buscar CEP e preencher endereço
+            buscarCepBtn.addEventListener('click', async () => {
+                const cep = document.getElementById('cep').value.replace(/\D/g, '');
+                if (cep.length !== 8) {
+                    alert('CEP inválido. Digite 8 números.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+
+                    if (data.erro) {
+                        throw new Error('CEP não encontrado');
+                    }
+
+                    // Preencher os campos de endereço e torná-los readonly
+                    document.getElementById('logradouro').value = data.logradouro;
+                    document.getElementById('logradouro').readOnly = true;
+                    document.getElementById('bairro').value = data.bairro;
+                    document.getElementById('bairro').readOnly = true;
+                    document.getElementById('localidade').value = data.localidade;
+                    document.getElementById('localidade').readOnly = true;
+                    document.getElementById('uf').value = data.uf;
+                    document.getElementById('uf').readOnly = true;
+                } catch (error) {
+                    alert('Erro ao buscar CEP: ' + error.message);
+                }
+            });
+
+            // Validar senha e enviar formulário
+            cadastrarBtn.addEventListener('click', async () => {
+                const senha = document.getElementById('senha').value;
+                const confirmarSenha = document.getElementById('confirmarSenha').value;
+
+                if (senha !== confirmarSenha) {
+                    alert('As senhas não coincidem.');
+                    return;
+                }
+
+                const formData = {
+                    nome: document.getElementById('nome').value,
+                    sobrenome: document.getElementById('sobrenome').value,
+                    email: document.getElementById('email').value,
+                    senha: senha,
+                    pessoa: document.querySelector('input[name="pessoa"]:checked').value,
+                    telefone: document.getElementById('telefone').value,
+                    cnpj: document.getElementById('cnpj').value,
+                    cep: document.getElementById('cep').value,
+                    numero: document.getElementById('numero').value,
+                    complemento: document.getElementById('complemento').value,
+                    endereco: {
+                        logradouro: document.getElementById('logradouro').value,
+                        bairro: document.getElementById('bairro').value,
+                        localidade: document.getElementById('localidade').value,
+                        uf: document.getElementById('uf').value
+                    }
+                };
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/users', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Erro ao cadastrar usuário');
+                    }
+
+                    const result = await response.json();
+                    alert('Usuário cadastrado com sucesso!');
+                    console.log('Resposta da API:', result);
+                } catch (error) {
+                    alert('Erro ao cadastrar usuário: ' + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
