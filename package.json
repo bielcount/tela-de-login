@@ -8,9 +8,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "node": "^23.9.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bielcount/tela-de-login.git"
